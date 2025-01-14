@@ -22,6 +22,7 @@ import (
 	"github.com/rizalarfiyan/be-tilik-jalan/config"
 	"github.com/rizalarfiyan/be-tilik-jalan/database"
 	_ "github.com/rizalarfiyan/be-tilik-jalan/docs"
+	"github.com/rizalarfiyan/be-tilik-jalan/internal/handler"
 	"github.com/rizalarfiyan/be-tilik-jalan/logger"
 	"github.com/rs/zerolog"
 )
@@ -72,9 +73,12 @@ func Run() {
 		}
 	}()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	// Handler
+	homeHandler := handler.NewHomeHandler()
+
+	// Router
+	router := NewRouter(app)
+	router.HomeRoute(homeHandler)
 
 	handleShutdown(server, logs)
 }
