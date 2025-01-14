@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: Generate docs
+      run: "make docs"
+    - name: Linter the code
+      run: "make lint"
