@@ -1,7 +1,18 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is an API documentation of BE Tilik Jalan",
+        "title": "BE Tilik Jalan",
+        "contact": {},
+        "version": "1.0"
     },
-    "paths": {}
+    "basePath": "/",
+    "paths": {},
+    "securityDefinitions": {
+        "AccessToken": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
 }

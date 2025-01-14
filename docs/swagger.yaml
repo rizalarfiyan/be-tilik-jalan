@@ -1,4 +1,13 @@
+basePath: /
 info:
   contact: {}
+  description: This is an API documentation of BE Tilik Jalan
+  title: BE Tilik Jalan
+  version: "1.0"
 paths: {}
+securityDefinitions:
+  AccessToken:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
