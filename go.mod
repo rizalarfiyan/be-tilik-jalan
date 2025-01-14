@@ -2,7 +2,11 @@ module github.com/rizalarfiyan/be-tilik-jalan
 
 go 1.23.2
 
-require github.com/swaggo/swag v1.16.4
+require (
+	github.com/caarlos0/env/v11 v11.3.1
+	github.com/joho/godotenv v1.5.1
+	github.com/swaggo/swag v1.16.4
+)
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
