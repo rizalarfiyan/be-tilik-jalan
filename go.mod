@@ -5,7 +5,9 @@ go 1.23.2
 require (
 	github.com/caarlos0/env/v11 v11.3.1
 	github.com/joho/godotenv v1.5.1
+	github.com/rs/zerolog v1.33.0
 	github.com/swaggo/swag v1.16.4
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (
@@ -18,6 +20,9 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.6 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect

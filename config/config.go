@@ -1,11 +1,14 @@
 package config
 
 import (
+	"errors"
 	"log"
+	"reflect"
 	"sync"
 
 	"github.com/caarlos0/env/v11"
 	"github.com/joho/godotenv"
+	"github.com/rs/zerolog"
 )
 
 var conf *Config
@@ -25,9 +28,29 @@ func Init() {
 			}
 		}
 
+		opts := env.Options{
+			FuncMap: map[reflect.Type]env.ParserFunc{
+				reflect.TypeOf(new(zerolog.Level)): func(v string) (interface{}, error) {
+					level, err := zerolog.ParseLevel(v)
+					if err != nil {
+						return nil, err
+					}
+					return level, nil
+				},
+			},
+		}
+
 		log.Println("Parsing environment variable")
-		cfg, err := env.ParseAs[Config]()
+		cfg, err := env.ParseAsWithOptions[Config](opts)
 		if err != nil {
+			aggErr := env.AggregateError{}
+			if ok := errors.As(err, &aggErr); ok {
+				for _, er := range aggErr.Errors {
+					log.Println(er)
+				}
+				log.Fatalln("Environment is not valid. Please check the configuration")
+			}
+
 			log.Fatalf("Failed to parse environment variable: %v", err)
 		}
 

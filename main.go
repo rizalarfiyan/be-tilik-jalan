@@ -1,17 +1,19 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/rizalarfiyan/be-tilik-jalan/config"
+	"github.com/rizalarfiyan/be-tilik-jalan/logger"
 )
 
 func init() {
 	config.Init()
+	conf := config.Get()
+	logger.Init(conf)
 }
 
 func main() {
 	conf := config.Get()
-	fmt.Println(conf)
-	fmt.Println("Hello, World!")
+	logs := logger.Get("main")
+	logs.Debug().Msg("Hello, World!")
+	logs.Debug().Msgf("ENV: %s", conf.Env)
 }
