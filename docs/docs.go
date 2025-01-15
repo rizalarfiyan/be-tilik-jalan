@@ -92,6 +92,29 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/auth/me": {
+            "get": {
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ],
+                "description": "Auth Me",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Get Auth Me based on parameter",
+                "operationId": "get-auth-me",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
         }
     },
     "definitions": {

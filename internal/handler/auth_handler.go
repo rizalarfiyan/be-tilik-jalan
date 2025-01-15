@@ -5,23 +5,29 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/rizalarfiyan/be-tilik-jalan/config"
+	"github.com/rizalarfiyan/be-tilik-jalan/exception"
+	"github.com/rizalarfiyan/be-tilik-jalan/internal/model"
+	"github.com/rizalarfiyan/be-tilik-jalan/internal/response"
 	"github.com/rizalarfiyan/be-tilik-jalan/internal/service"
 )
 
 type AuthHandler interface {
 	Google(ctx *fiber.Ctx) error
 	GoogleCallback(ctx *fiber.Ctx) error
+	Me(ctx *fiber.Ctx) error
 }
 
 type authHandler struct {
-	service service.AuthService
-	conf    *config.Config
+	service   service.AuthService
+	conf      *config.Config
+	exception exception.Exception
 }
 
 func NewAuthHandler(service service.AuthService) AuthHandler {
 	return &authHandler{
-		service: service,
-		conf:    config.Get(),
+		service:   service,
+		conf:      config.Get(),
+		exception: exception.NewException(),
 	}
 }
 
@@ -52,4 +58,26 @@ func (h *authHandler) GoogleCallback(ctx *fiber.Ctx) error {
 	code := ctx.Query("code")
 	redirectUrl := h.service.GoogleCallback(ctx.Context(), code)
 	return ctx.Redirect(redirectUrl, http.StatusTemporaryRedirect)
+}
+
+// Auth Me godoc
+//
+//	@Summary		Get Auth Me based on parameter
+//	@Description	Auth Me
+//	@ID				get-auth-me
+//	@Security		AccessToken
+//	@Tags			auth
+//	@Success		200
+//	@Failure		401
+//	@Router			/auth/me [get]
+func (h *authHandler) Me(ctx *fiber.Ctx) error {
+	user := new(model.User)
+	isFound := user.FromReq(ctx)
+	h.exception.UnauthorizedBool(!isFound)
+
+	return ctx.JSON(response.Base{
+		Code:    fiber.StatusOK,
+		Message: "Get auth me successfully",
+		Data:    user,
+	})
 }

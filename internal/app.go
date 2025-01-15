@@ -26,6 +26,7 @@ import (
 	"github.com/rizalarfiyan/be-tilik-jalan/internal/repository"
 	"github.com/rizalarfiyan/be-tilik-jalan/internal/service"
 	"github.com/rizalarfiyan/be-tilik-jalan/logger"
+	"github.com/rizalarfiyan/be-tilik-jalan/middleware"
 	"github.com/rs/zerolog"
 )
 
@@ -86,7 +87,8 @@ func Run() {
 	authHandler := handler.NewAuthHandler(authService)
 
 	// Router
-	router := NewRouter(app)
+	mid := middleware.NewMiddleware(authRepository)
+	router := NewRouter(app, mid)
 	router.HomeRoute(homeHandler)
 	router.AuthRoute(authHandler)
 

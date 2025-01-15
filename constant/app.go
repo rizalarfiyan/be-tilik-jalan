@@ -7,3 +7,4 @@ var (
 )
 
 const AUTH_STATE = "state"
+const AUTH_KEY_LOCALS = "auth"

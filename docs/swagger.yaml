@@ -75,6 +75,20 @@ paths:
       summary: Get Auth Google Callback based on parameter
       tags:
       - auth
+  /auth/me:
+    get:
+      description: Auth Me
+      operationId: get-auth-me
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+      security:
+      - AccessToken: []
+      summary: Get Auth Me based on parameter
+      tags:
+      - auth
 securityDefinitions:
   AccessToken:
     in: header

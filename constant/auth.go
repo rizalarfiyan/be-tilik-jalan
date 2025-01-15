@@ -38,3 +38,25 @@ func (r AuthRole) IsValidAuth(roles ...AuthRole) bool {
 
 	return false
 }
+
+func (r AuthRole) Has(role AuthRole) bool {
+	if r.IsAdmin() {
+		return true
+	}
+
+	return r == role
+}
+
+func (r AuthRole) Have(permissions ...AuthRole) bool {
+	if len(permissions) == 0 {
+		return true
+	}
+
+	for _, permission := range permissions {
+		if r.Has(permission) {
+			return true
+		}
+	}
+
+	return false
+}

@@ -12,6 +12,7 @@ import (
 )
 
 type AuthRepository interface {
+	GetById(ctx context.Context, id uuid.UUID) (*model.User, error)
 	GetByEmail(ctx context.Context, email string) (*model.User, error)
 	UpdateLastLoggedIn(ctx context.Context, id int) error
 	Insert(ctx context.Context, user model.NewUser) (*uuid.UUID, error)
@@ -27,6 +28,17 @@ func NewAuthRepository(db *sql.DB) AuthRepository {
 		db:  db,
 		log: logger.Get("auth_repository"),
 	}
+}
+
+func (r *authRepository) GetById(ctx context.Context, id uuid.UUID) (*model.User, error) {
+	var res model.User
+	query := `SELECT id, email, name, role, is_active, last_logged_in, created_at, updated_at FROM users WHERE id = $1`
+	err := r.db.QueryRowContext(ctx, query, id).Scan(&res.Id, &res.Email, &res.Name, &res.Role, &res.IsActive, &res.LastLoggedIn, &res.CreatedAt, &res.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 func (r *authRepository) GetByEmail(ctx context.Context, email string) (*model.User, error) {

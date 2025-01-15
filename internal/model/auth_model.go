@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"github.com/rizalarfiyan/be-tilik-jalan/config"
@@ -39,6 +40,14 @@ type User struct {
 	IsActive     bool              `json:"is_active"`
 	LastLoggedIn time.Time         `json:"last_logged_in"`
 	WithTimestamp
+}
+
+func (u *User) FromReq(ctx *fiber.Ctx) bool {
+	user, isFound := ctx.Locals(constant.AUTH_KEY_LOCALS).(User)
+	if isFound {
+		*u = user
+	}
+	return isFound
 }
 
 type NewUser struct {
