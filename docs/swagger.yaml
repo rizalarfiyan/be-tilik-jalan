@@ -1,10 +1,80 @@
 basePath: /
+definitions:
+  response.Base:
+    properties:
+      data: {}
+      message:
+        example: Message!
+        type: string
+    type: object
+  response.Home:
+    properties:
+      author:
+        type: string
+      github:
+        type: string
+      linkedin:
+        type: string
+      title:
+        type: string
+      website:
+        type: string
+    type: object
 info:
   contact: {}
   description: This is an API documentation of BE Tilik Jalan
   title: BE Tilik Jalan
   version: "1.0"
-paths: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Home
+      operationId: home
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.Home'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Base'
+      summary: Home based on parameter
+      tags:
+      - Home
+  /auth/google:
+    get:
+      description: Auth Google Redirection
+      operationId: get-auth-google
+      responses:
+        "307":
+          description: Temporary Redirect
+        "500":
+          description: Internal Server Error
+      summary: Get Auth Google Redirection based on parameter
+      tags:
+      - auth
+  /auth/google/callback:
+    get:
+      description: Auth Google Callback
+      operationId: get-auth-google-callback
+      responses:
+        "307":
+          description: Temporary Redirect
+        "500":
+          description: Internal Server Error
+      summary: Get Auth Google Callback based on parameter
+      tags:
+      - auth
 securityDefinitions:
   AccessToken:
     in: header

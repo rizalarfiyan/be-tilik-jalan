@@ -7,6 +7,7 @@ import (
 
 type Router interface {
 	HomeRoute(handler handler.HomeHandler)
+	AuthRoute(handler handler.AuthHandler)
 }
 
 type router struct {
@@ -21,4 +22,9 @@ func NewRouter(app *fiber.App) Router {
 
 func (r *router) HomeRoute(handler handler.HomeHandler) {
 	r.app.Get("", handler.Home)
+}
+
+func (r *router) AuthRoute(handler handler.AuthHandler) {
+	r.app.Get("/auth/google", handler.Google)
+	r.app.Get("/auth/google/callback", handler.GoogleCallback)
 }

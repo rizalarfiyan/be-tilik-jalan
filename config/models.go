@@ -1,6 +1,7 @@
 package config
 
 import (
+	"net/url"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -15,6 +16,7 @@ type Config struct {
 	Http    Http    `envPrefix:"HTTP_"`
 	Cors    Cors    `envPrefix:"CORS_"`
 	Swagger Swagger `envPrefix:"SWAGGER_"`
+	Auth    Auth    `envPrefix:"AUTH_"`
 }
 
 type Logger struct {
@@ -52,4 +54,22 @@ type Cors struct {
 type Swagger struct {
 	Username string `env:"USERNAME" envDefault:""`
 	Password string `env:"PASSWORD" envDefault:""`
+}
+
+type Auth struct {
+	Google   AuthGoogle `envPrefix:"GOOGLE_"`
+	JWT      AuthJWT    `envPrefix:"JWT_"`
+	Callback *url.URL   `env:"CALLBACK,required,notEmpty"`
+}
+
+type AuthGoogle struct {
+	ClientID     string   `env:"CLIENT_ID,required,notEmpty" envDefault:""`
+	ClientSecret string   `env:"CLIENT_SECRET,required,notEmpty" envDefault:""`
+	RedirectURL  string   `env:"REDIRECT_URL,required,notEmpty" envDefault:""`
+	Scopes       []string `env:"SCOPES" envDefault:"openid,email,profile"`
+}
+
+type AuthJWT struct {
+	Secret  string        `env:"SECRET,required,notEmpty"`
+	Expired time.Duration `env:"EXPIRED" envDefault:"24h"`
 }

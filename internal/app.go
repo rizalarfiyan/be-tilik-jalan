@@ -23,6 +23,8 @@ import (
 	"github.com/rizalarfiyan/be-tilik-jalan/database"
 	_ "github.com/rizalarfiyan/be-tilik-jalan/docs"
 	"github.com/rizalarfiyan/be-tilik-jalan/internal/handler"
+	"github.com/rizalarfiyan/be-tilik-jalan/internal/repository"
+	"github.com/rizalarfiyan/be-tilik-jalan/internal/service"
 	"github.com/rizalarfiyan/be-tilik-jalan/logger"
 	"github.com/rs/zerolog"
 )
@@ -73,12 +75,20 @@ func Run() {
 		}
 	}()
 
+	// Repository
+	authRepository := repository.NewAuthRepository(pgSql)
+
+	// Service
+	authService := service.NewAuthService(authRepository)
+
 	// Handler
 	homeHandler := handler.NewHomeHandler()
+	authHandler := handler.NewAuthHandler(authService)
 
 	// Router
 	router := NewRouter(app)
 	router.HomeRoute(homeHandler)
+	router.AuthRoute(authHandler)
 
 	handleShutdown(server, logs)
 }

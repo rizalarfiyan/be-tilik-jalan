@@ -20,6 +20,7 @@ type exception struct {
 }
 
 type Exception interface {
+	IsErrNoRows(err error) bool
 	Error(err error)
 	ErrorSkipNotFound(err error)
 	ManualValidation(key, message string, messages ...string)
@@ -36,6 +37,7 @@ type Exception interface {
 	SelectQuery(err error, messages ...string)
 	BadRequest(messages ...string)
 	BadRequestErr(err error, messages ...string)
+	BadRequestBool(isError bool, messages ...string)
 	ValidateStruct(dataSet interface{}, fullPathPrefix ...bool)
 	Forbidden(messages ...string)
 	ForbiddenBool(isForbidden bool, messages ...string)
@@ -48,6 +50,10 @@ func NewException() Exception {
 	return &exception{
 		log: logger.GetWithoutCaller("exception"),
 	}
+}
+
+func (e *exception) IsErrNoRows(err error) bool {
+	return err != nil && errors.Is(err, sql.ErrNoRows)
 }
 
 func (e *exception) getCaller(skips ...int) string {
@@ -190,6 +196,12 @@ func (e *exception) BadRequest(messages ...string) {
 
 func (e *exception) BadRequestErr(err error, messages ...string) {
 	if err != nil {
+		e.baseBadRequest(messages...)
+	}
+}
+
+func (e *exception) BadRequestBool(isError bool, messages ...string) {
+	if isError {
 		e.baseBadRequest(messages...)
 	}
 }

@@ -3,6 +3,7 @@ package config
 import (
 	"errors"
 	"log"
+	"net/url"
 	"reflect"
 	"sync"
 
@@ -36,6 +37,13 @@ func Init() {
 						return nil, err
 					}
 					return level, nil
+				},
+				reflect.TypeOf(new(url.URL)): func(v string) (interface{}, error) {
+					u, err := url.Parse(v)
+					if err != nil {
+						return nil, err
+					}
+					return *u, nil
 				},
 			},
 		}
