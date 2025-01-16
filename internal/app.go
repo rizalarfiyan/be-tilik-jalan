@@ -48,6 +48,7 @@ func Run() {
 	app := fiber.New(fiberConfig(conf))
 	app.Use(fiberzerolog.New(zerologConfig(logApi)))
 	app.Use(requestid.New())
+	app.Static("/public", "./public")
 	app.Use(cors.New(corsConfig(conf)))
 	app.Use(compress.New())
 	app.Use(helmet.New())

@@ -5,6 +5,10 @@ CREATE TABLE IF NOT EXISTS cctvs
     link       VARCHAR(128)     NOT NULL,
     latitude   DECIMAL(10, 8)   NOT NULL,
     longitude  DECIMAL(11, 8)   NOT NULL,
+    width      SMALLINT         NOT NULL,
+    height     SMALLINT         NOT NULL,
+    aspect     VARCHAR(8)       NOT NULL,
+    image      VARCHAR(128)     NOT NULL,
     created_at TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP
 );

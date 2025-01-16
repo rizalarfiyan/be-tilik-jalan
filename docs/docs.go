@@ -182,7 +182,16 @@ const docTemplate = `{
         "model.CCTVItem": {
             "type": "object",
             "properties": {
+                "aspect": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "integer"
+                },
                 "id": {
+                    "type": "string"
+                },
+                "image": {
                     "type": "string"
                 },
                 "latitude": {
@@ -196,6 +205,9 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                },
+                "width": {
+                    "type": "integer"
                 }
             }
         },

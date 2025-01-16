@@ -2,7 +2,13 @@ basePath: /
 definitions:
   model.CCTVItem:
     properties:
+      aspect:
+        type: string
+      height:
+        type: integer
       id:
+        type: string
+      image:
         type: string
       latitude:
         type: number
@@ -12,6 +18,8 @@ definitions:
         type: number
       title:
         type: string
+      width:
+        type: integer
     type: object
   response.Base:
     properties:
