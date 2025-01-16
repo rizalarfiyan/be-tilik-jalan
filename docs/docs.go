@@ -179,6 +179,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.CCTVImage": {
+            "type": "object",
+            "properties": {
+                "src": {
+                    "type": "string"
+                },
+                "thumb": {
+                    "type": "string"
+                }
+            }
+        },
         "model.CCTVItem": {
             "type": "object",
             "properties": {
@@ -192,7 +203,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "image": {
-                    "type": "string"
+                    "$ref": "#/definitions/model.CCTVImage"
                 },
                 "latitude": {
                     "type": "number"

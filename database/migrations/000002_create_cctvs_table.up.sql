@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS cctvs
     width      SMALLINT         NOT NULL,
     height     SMALLINT         NOT NULL,
     aspect     VARCHAR(8)       NOT NULL,
-    image      VARCHAR(128)     NOT NULL,
     created_at TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP
 );

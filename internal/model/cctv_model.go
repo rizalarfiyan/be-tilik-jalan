@@ -1,6 +1,11 @@
 package model
 
-import "github.com/google/uuid"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+	"github.com/rizalarfiyan/be-tilik-jalan/config"
+)
 
 type CCTVItem struct {
 	Id        uuid.UUID `json:"id"`
@@ -11,7 +16,20 @@ type CCTVItem struct {
 	Width     int       `json:"width"`
 	Height    int       `json:"height"`
 	Aspect    string    `json:"aspect"`
-	Image     string    `json:"image"`
+	Image     CCTVImage `json:"image"`
+}
+
+type CCTVImage struct {
+	Src   string `json:"src"`
+	Thumb string `json:"thumb"`
+}
+
+func (c *CCTVItem) FillImage() {
+	conf := config.Get()
+	c.Image = CCTVImage{
+		Src:   conf.PublicUrl.JoinPath(fmt.Sprintf("/cctv/%s.jpg", c.Id)).String(),
+		Thumb: conf.PublicUrl.JoinPath(fmt.Sprintf("/cctv/thumb/%s.jpg", c.Id)).String(),
+	}
 }
 
 type CCTVs []CCTVItem

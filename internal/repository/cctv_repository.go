@@ -26,8 +26,8 @@ func NewCCTVRepository(db *sql.DB) CCTVRepository {
 }
 
 func (r *cctvRepository) GetAll(ctx context.Context) (model.CCTVs, error) {
-	var res []model.CCTVItem
-	query := `SELECT id, title, link, latitude, longitude, width, height, aspect, image FROM cctvs`
+	var res model.CCTVs
+	query := `SELECT id, title, link, latitude, longitude, width, height, aspect FROM cctvs`
 	rows, err := r.db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
@@ -36,10 +36,11 @@ func (r *cctvRepository) GetAll(ctx context.Context) (model.CCTVs, error) {
 
 	for rows.Next() {
 		var item model.CCTVItem
-		err := rows.Scan(&item.Id, &item.Title, &item.Link, &item.Latitude, &item.Longitude, &item.Width, &item.Height, &item.Aspect, &item.Image)
+		err := rows.Scan(&item.Id, &item.Title, &item.Link, &item.Latitude, &item.Longitude, &item.Width, &item.Height, &item.Aspect)
 		if err != nil {
 			return nil, err
 		}
+		item.FillImage()
 		res = append(res, item)
 	}
 

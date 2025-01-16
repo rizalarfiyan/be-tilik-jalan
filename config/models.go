@@ -8,15 +8,16 @@ import (
 )
 
 type Config struct {
-	Env     Env
-	Port    int     `env:"PORT" envDefault:"8080"`
-	Host    string  `env:"HOST" envDefault:""`
-	Logger  Logger  `envPrefix:"LOG_"`
-	DB      DB      `envPrefix:"DB_"`
-	Http    Http    `envPrefix:"HTTP_"`
-	Cors    Cors    `envPrefix:"CORS_"`
-	Swagger Swagger `envPrefix:"SWAGGER_"`
-	Auth    Auth    `envPrefix:"AUTH_"`
+	Env       Env
+	Port      int      `env:"PORT" envDefault:"8080"`
+	Host      string   `env:"HOST" envDefault:""`
+	PublicUrl *url.URL `env:"PUBLIC_URL" envDefault:"http://localhost:8080/"`
+	Logger    Logger   `envPrefix:"LOG_"`
+	DB        DB       `envPrefix:"DB_"`
+	Http      Http     `envPrefix:"HTTP_"`
+	Cors      Cors     `envPrefix:"CORS_"`
+	Swagger   Swagger  `envPrefix:"SWAGGER_"`
+	Auth      Auth     `envPrefix:"AUTH_"`
 }
 
 type Logger struct {

@@ -1,5 +1,12 @@
 basePath: /
 definitions:
+  model.CCTVImage:
+    properties:
+      src:
+        type: string
+      thumb:
+        type: string
+    type: object
   model.CCTVItem:
     properties:
       aspect:
@@ -9,7 +16,7 @@ definitions:
       id:
         type: string
       image:
-        type: string
+        $ref: '#/definitions/model.CCTVImage'
       latitude:
         type: number
       link:
