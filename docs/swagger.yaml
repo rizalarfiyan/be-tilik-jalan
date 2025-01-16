@@ -1,5 +1,18 @@
 basePath: /
 definitions:
+  model.CCTVItem:
+    properties:
+      id:
+        type: string
+      latitude:
+        type: number
+      link:
+        type: string
+      longitude:
+        type: number
+      title:
+        type: string
+    type: object
   response.Base:
     properties:
       data: {}
@@ -89,6 +102,39 @@ paths:
       summary: Get Auth Me based on parameter
       tags:
       - auth
+  /cctv:
+    get:
+      consumes:
+      - application/json
+      operationId: get-all-cctv
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.CCTVItem'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                message:
+                  type: string
+              type: object
+      security:
+      - AccessToken: []
+      summary: Get all CCTV records
+      tags:
+      - cctv
 securityDefinitions:
   AccessToken:
     in: header

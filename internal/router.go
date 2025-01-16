@@ -9,6 +9,7 @@ import (
 type Router interface {
 	HomeRoute(handler handler.HomeHandler)
 	AuthRoute(handler handler.AuthHandler)
+	CCTVRoute(handler handler.CCTVHandler)
 }
 
 type router struct {
@@ -31,4 +32,8 @@ func (r *router) AuthRoute(handler handler.AuthHandler) {
 	r.app.Get("/auth/me", r.mid.Auth(), handler.Me)
 	r.app.Get("/auth/google", handler.Google)
 	r.app.Get("/auth/google/callback", handler.GoogleCallback)
+}
+
+func (r *router) CCTVRoute(handler handler.CCTVHandler) {
+	r.app.Get("/cctv", r.mid.Auth(), handler.GetAll)
 }

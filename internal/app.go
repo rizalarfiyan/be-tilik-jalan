@@ -78,19 +78,23 @@ func Run() {
 
 	// Repository
 	authRepository := repository.NewAuthRepository(pgSql)
+	cctvRepository := repository.NewCCTVRepository(pgSql)
 
 	// Service
 	authService := service.NewAuthService(authRepository)
+	cctvService := service.NewCCTVService(cctvRepository)
 
 	// Handler
 	homeHandler := handler.NewHomeHandler()
 	authHandler := handler.NewAuthHandler(authService)
+	cctvHandler := handler.NewCCTVHandler(cctvService)
 
 	// Router
 	mid := middleware.NewMiddleware(authRepository)
 	router := NewRouter(app, mid)
 	router.HomeRoute(homeHandler)
 	router.AuthRoute(authHandler)
+	router.CCTVRoute(cctvHandler)
 
 	handleShutdown(server, logs)
 }
