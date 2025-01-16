@@ -27,7 +27,7 @@ func NewCCTVRepository(db *sql.DB) CCTVRepository {
 
 func (r *cctvRepository) GetAll(ctx context.Context) (model.CCTVs, error) {
 	var res model.CCTVs
-	query := `SELECT id, title, link, latitude, longitude, width, height, aspect FROM cctvs`
+	query := `SELECT id, title, link, latitude, longitude, width, height, aspect FROM cctvs ORDER BY title`
 	rows, err := r.db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err

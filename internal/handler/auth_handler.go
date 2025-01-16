@@ -67,17 +67,19 @@ func (h *authHandler) GoogleCallback(ctx *fiber.Ctx) error {
 //	@ID				get-auth-me
 //	@Security		AccessToken
 //	@Tags			auth
-//	@Success		200
-//	@Failure		401
+//	@Success		200	{object}	response.Base{data=response.AuthMe}
+//	@Failure		500	{object}	response.Base{message=string}
 //	@Router			/auth/me [get]
 func (h *authHandler) Me(ctx *fiber.Ctx) error {
 	user := new(model.User)
 	isFound := user.FromReq(ctx)
 	h.exception.UnauthorizedBool(!isFound)
 
+	data := new(response.AuthMe)
+	data.FromUser(user)
 	return ctx.JSON(response.Base{
 		Code:    fiber.StatusOK,
 		Message: "Get auth me successfully",
-		Data:    user,
+		Data:    data,
 	})
 }

@@ -1,5 +1,13 @@
 basePath: /
 definitions:
+  constant.AuthRole:
+    enum:
+    - admin
+    - guest
+    type: string
+    x-enum-varnames:
+    - AuthAdmin
+    - AuthGuest
   model.CCTVImage:
     properties:
       src:
@@ -27,6 +35,19 @@ definitions:
         type: string
       width:
         type: integer
+    type: object
+  response.AuthMe:
+    properties:
+      avatar:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      role:
+        $ref: '#/definitions/constant.AuthRole'
     type: object
   response.Base:
     properties:
@@ -110,8 +131,22 @@ paths:
       responses:
         "200":
           description: OK
-        "401":
-          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.AuthMe'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                message:
+                  type: string
+              type: object
       security:
       - AccessToken: []
       summary: Get Auth Me based on parameter

@@ -108,10 +108,40 @@ const docTemplate = `{
                 "operationId": "get-auth-me",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Base"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.AuthMe"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Base"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     }
                 }
             }
@@ -179,6 +209,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "constant.AuthRole": {
+            "type": "string",
+            "enum": [
+                "admin",
+                "guest"
+            ],
+            "x-enum-varnames": [
+                "AuthAdmin",
+                "AuthGuest"
+            ]
+        },
         "model.CCTVImage": {
             "type": "object",
             "properties": {
@@ -219,6 +260,26 @@ const docTemplate = `{
                 },
                 "width": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.AuthMe": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "role": {
+                    "$ref": "#/definitions/constant.AuthRole"
                 }
             }
         },
