@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS cctvs
     longitude  DECIMAL(11, 8)   NOT NULL,
     width      SMALLINT         NOT NULL,
     height     SMALLINT         NOT NULL,
-    aspect     VARCHAR(8)       NOT NULL,
     created_at TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP
 );

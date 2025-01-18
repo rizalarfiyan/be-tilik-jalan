@@ -15,7 +15,6 @@ type CCTVItem struct {
 	Longitude float64   `json:"longitude"`
 	Width     int       `json:"width"`
 	Height    int       `json:"height"`
-	Aspect    string    `json:"aspect"`
 	Image     CCTVImage `json:"image"`
 }
 

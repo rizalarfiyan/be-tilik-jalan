@@ -234,9 +234,6 @@ const docTemplate = `{
         "model.CCTVItem": {
             "type": "object",
             "properties": {
-                "aspect": {
-                    "type": "string"
-                },
                 "height": {
                     "type": "integer"
                 },

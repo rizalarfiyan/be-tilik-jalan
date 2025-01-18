@@ -17,8 +17,6 @@ definitions:
     type: object
   model.CCTVItem:
     properties:
-      aspect:
-        type: string
       height:
         type: integer
       id:
