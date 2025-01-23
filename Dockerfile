@@ -2,7 +2,7 @@ FROM golang:1.23.2-alpine AS builder
 WORKDIR /app
 COPY . .
 
-RUN apk add --no-cache upx
+RUN apk add --no-cache upx ca-certificates
 
 RUN mkdir -p /app/database/migrations
 RUN go mod download
@@ -13,9 +13,10 @@ RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build \
 
 RUN upx -9 backend
 
-FROM scratch
+FROM alpine:latest
 WORKDIR /app
 
+RUN apk add --no-cache ca-certificates
 COPY --from=builder /app/backend /app/
 COPY --from=builder /app/database/migrations /app/database/migrations
 
