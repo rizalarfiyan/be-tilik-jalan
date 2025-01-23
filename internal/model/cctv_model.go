@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/rizalarfiyan/be-tilik-jalan/config"
 )
 
 type CCTVItem struct {
@@ -19,9 +18,7 @@ type CCTVItem struct {
 }
 
 func (c *CCTVItem) FillImage() {
-	conf := config.Get()
-	thumb := conf.PublicUrl.JoinPath(fmt.Sprintf("/cctv/thumb/%s.jpg", c.Id)).String()
-	c.Thumbnail = thumb
+	c.Thumbnail = fmt.Sprintf("cctv/thumb/%s.jpg", c.Id)
 }
 
 type CCTVs []CCTVItem
