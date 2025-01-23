@@ -47,7 +47,7 @@ func Init(conf *config.Config) {
 			},
 		}
 
-		if conf.Env.IsProduction() || conf.Env.IsStaging() {
+		if (conf.Env.IsProduction() || conf.Env.IsStaging()) && conf.Logger.File {
 			lumberjackLog := NewLumberjackLogger(conf)
 			output = zerolog.MultiLevelWriter(output, lumberjackLog.Run())
 		}

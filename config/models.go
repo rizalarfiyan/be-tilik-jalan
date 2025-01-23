@@ -23,6 +23,7 @@ type Config struct {
 type Logger struct {
 	Level         zerolog.Level `env:"LEVEL" envDefault:"warn"`
 	Path          string        `env:"PATH,required,notEmpty" envDefault:""`
+	File          bool          `env:"FILE" envDefault:"true"`
 	IsCompressed  bool          `env:"IS_COMPRESSED" envDefault:"true"`
 	IsDailyRotate bool          `env:"IS_DAILY_ROTATE" envDefault:"true"`
 	SleepDuration time.Duration `env:"SLEEP_DURATION" envDefault:"1s"`
