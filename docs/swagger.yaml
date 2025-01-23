@@ -8,27 +8,20 @@ definitions:
     x-enum-varnames:
     - AuthAdmin
     - AuthGuest
-  model.CCTVImage:
-    properties:
-      src:
-        type: string
-      thumb:
-        type: string
-    type: object
   model.CCTVItem:
     properties:
       height:
         type: integer
       id:
         type: string
-      image:
-        $ref: '#/definitions/model.CCTVImage'
       latitude:
         type: number
       link:
         type: string
       longitude:
         type: number
+      thumbnail:
+        type: string
       title:
         type: string
       width:

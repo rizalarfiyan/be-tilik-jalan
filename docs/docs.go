@@ -220,17 +220,6 @@ const docTemplate = `{
                 "AuthGuest"
             ]
         },
-        "model.CCTVImage": {
-            "type": "object",
-            "properties": {
-                "src": {
-                    "type": "string"
-                },
-                "thumb": {
-                    "type": "string"
-                }
-            }
-        },
         "model.CCTVItem": {
             "type": "object",
             "properties": {
@@ -240,9 +229,6 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "image": {
-                    "$ref": "#/definitions/model.CCTVImage"
-                },
                 "latitude": {
                     "type": "number"
                 },
@@ -251,6 +237,9 @@ const docTemplate = `{
                 },
                 "longitude": {
                     "type": "number"
+                },
+                "thumbnail": {
+                    "type": "string"
                 },
                 "title": {
                     "type": "string"

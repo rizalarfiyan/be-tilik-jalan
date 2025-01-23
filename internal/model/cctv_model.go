@@ -15,20 +15,13 @@ type CCTVItem struct {
 	Longitude float64   `json:"longitude"`
 	Width     int       `json:"width"`
 	Height    int       `json:"height"`
-	Image     CCTVImage `json:"image"`
-}
-
-type CCTVImage struct {
-	Src   string `json:"src"`
-	Thumb string `json:"thumb"`
+	Thumbnail string    `json:"thumbnail"`
 }
 
 func (c *CCTVItem) FillImage() {
 	conf := config.Get()
-	c.Image = CCTVImage{
-		Src:   conf.PublicUrl.JoinPath(fmt.Sprintf("/cctv/%s.jpg", c.Id)).String(),
-		Thumb: conf.PublicUrl.JoinPath(fmt.Sprintf("/cctv/thumb/%s.jpg", c.Id)).String(),
-	}
+	thumb := conf.PublicUrl.JoinPath(fmt.Sprintf("/cctv/thumb/%s.jpg", c.Id)).String()
+	c.Thumbnail = thumb
 }
 
 type CCTVs []CCTVItem
