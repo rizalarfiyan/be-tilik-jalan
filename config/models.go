@@ -39,6 +39,7 @@ type DB struct {
 	ConnectionLifetime time.Duration `env:"CONNECTION_LIFETIME" envDefault:"5m"`
 	MaxIdle            int           `env:"MAX_IDLE" envDefault:"30"`
 	MaxOpen            int           `env:"MAX_OPEN" envDefault:"90"`
+	SSL                bool          `env:"SSL" envDefault:"false"`
 }
 
 type Http struct {

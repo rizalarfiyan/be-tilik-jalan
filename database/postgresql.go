@@ -28,7 +28,11 @@ func InitPostgresql(ctx context.Context, conf *config.Config) {
 		log.Info().Msg("Auto migrating postgresql database")
 
 		val := url.Values{}
-		val.Add("sslmode", "disable")
+		if conf.DB.SSL {
+			val.Add("sslmode", "require")
+		} else {
+			val.Add("sslmode", "disable")
+		}
 		dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?%s", conf.DB.User, conf.DB.Password, conf.DB.Host, conf.DB.Port, conf.DB.Name, val.Encode())
 		autoMigrate(log, dsn)
 
